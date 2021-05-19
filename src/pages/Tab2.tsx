@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonSelect, IonSelectOption,
 IonButton, IonIcon, IonList, IonRoute} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import { checkmarkDone } from 'ionicons/icons';
 import { crearSolicitud } from '../hooks/FormTab2';
@@ -14,22 +12,6 @@ const Tab2: React.FC = () => {
   const [country, setCountry] = useState<string>('mx');
   const [category, setCategory] = useState<string>('business');
   const evento = crearSolicitud(country, category);
-
-    const API_KEY = "fb422682c3184afd97bba130cee8d153";
-    const URL = `https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${API_KEY}`;
-  
-    const fetchArticles = () => {
-      return axios({
-        url: URL,
-        method: 'get'
-      }).then(response => {
-        
-        return response.data;
-      })
-    };
-  
-    const [articles, setArticles] = React.useState([]);
-    const items: any[] = [];
 
   return (
     <IonPage>
@@ -68,27 +50,7 @@ const Tab2: React.FC = () => {
 
           <IonButton color="success" expand="full" onClick={ () => {
             window.location.href ="Tab3#" + country+"#" + category;
-          }           
-            /*() => {
-              fetchArticles().then(data => setArticles(data.articles));
-              //console.log(articles);
-
-              return(
-                <IonList>
-                  {
-                    articles.map(a => {
-                        <IonItem>
-                          {a['title']}
-                          <IonButton href={a['url']} color="primary" slot="end">Read</IonButton>
-                        </IonItem>
-                        console.log(a);
-                    })
-                  }
-                </IonList>
-              );
-              
-          }*/}>
-
+          }}>
           <IonIcon slot="start" icon={checkmarkDone} />
             Buscar
           </IonButton>
