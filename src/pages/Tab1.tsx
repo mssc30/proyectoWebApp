@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonLabel, IonItem, IonInput, IonDatetime,
   IonSelect, IonSelectOption, IonButton, IonIcon, useIonAlert } from '@ionic/react';
-import { checkmarkDone, newspaper} from 'ionicons/icons';
+import { checkmarkDone} from 'ionicons/icons';
 import './Tab1.css';
 import {
   Plugins
@@ -20,8 +20,7 @@ const Tab1: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar slot="secondary">
-        <IonIcon slot="start" size="large" icon={newspaper} />
+        <IonToolbar color = "tertiary">
           <IonTitle>Buscar Noticias</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -62,7 +61,7 @@ const Tab1: React.FC = () => {
             </IonSelect>
           </IonItem>
 
-          <IonButton color="success" expand="block" onClick={() => {
+          <IonButton color="primary" expand="block" onClick={() => {
             present({
               cssClass: 'my-css',
               header: 'Revisa los datos',

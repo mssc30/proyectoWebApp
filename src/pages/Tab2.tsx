@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonSelect, IonSelectOption,
 IonButton, IonIcon} from '@ionic/react';
 import './Tab2.css';
-import { checkmarkDone, newspaper } from 'ionicons/icons';
+import { checkmarkDone } from 'ionicons/icons';
 import {
   Plugins
 } from '@capacitor/core';
@@ -16,8 +16,7 @@ const Tab2: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonIcon slot="start" size="large" icon={newspaper} />
+        <IonToolbar color = "tertiary">
           <IonTitle>Obtener Top Noticias</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -48,7 +47,7 @@ const Tab2: React.FC = () => {
           </IonItem>
 
 
-          <IonButton color="success" expand="block" onClick={ () => {
+          <IonButton color="primary" expand="block" onClick={ () => {
             Haptics.vibrate();
             window.location.href ="Tab3#" + country+"#" + category;
           }}>

@@ -1,15 +1,10 @@
 import {
-  IonContent,
-  IonHeader,
-  IonList,
-  IonTitle,
-  IonToolbar,
-  IonCard, IonImg, IonPage, IonCardContent, IonCardHeader, IonCardTitle, IonIcon , IonItem, IonCardSubtitle
-} from '@ionic/react';
-import { reader, share, save } from 'ionicons/icons';
+  IonContent, IonHeader, IonList, IonTitle, IonToolbar, IonCard, IonImg, IonPage, IonCardContent, 
+  IonCardHeader, IonCardTitle, IonIcon , IonItem, IonCardSubtitle } from '@ionic/react';
+import {bookmarkOutline, eyeOutline, shareSocialOutline } from 'ionicons/icons';
 import axios from 'axios';
 import React from 'react';
-import { AbrirURL, guardarNoticia, alerta } from '../hooks/HookCapacitor';
+import { AbrirURL, guardarNoticia } from '../hooks/HookCapacitor';
 
 ////////////
 
@@ -52,7 +47,7 @@ const Tab3: React.FC = () => {
   return (
     <IonPage>
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar color = "tertiary">
         <IonTitle>Resultados</IonTitle>
       </IonToolbar>
     </IonHeader>
@@ -61,7 +56,7 @@ const Tab3: React.FC = () => {
         {
           articles.map(a => {
                 return (
-                  <IonCard>
+                  <IonCard color = "Light">
                     <IonImg src={a['urlToImage']}></IonImg>
                     <IonCardHeader>
                       <IonCardTitle>{a['title']}</IonCardTitle>
@@ -69,27 +64,28 @@ const Tab3: React.FC = () => {
 
                     <IonCardContent>{a['content']}</IonCardContent>
                     
-                    <IonItem>
+                    <IonItem color = "Light">
 
                       <IonCardSubtitle>{(a['publishedAt']+"").substring(0, 10)}</IonCardSubtitle>
 
-                      <IonIcon icon={save} size="large" slot = "end" 
-                      onClick={()=>{                       
-                        const writeFile = guardarNoticia(a['title'], a['description'], a['url']);
-                        writeFile();
-                      }}></IonIcon>
-                      
-                      <IonIcon icon={reader} size="large" slot = "end" 
+                      <IonIcon icon={eyeOutline} size="large" slot = "end" 
                       onClick={()=>{
                         const abrirUrl = AbrirURL(a['url']);
                         abrirUrl.openCapacitorSite();
                       }}></IonIcon>
 
-                      <IonIcon slot="end" size="large" icon={share}
+                      <IonIcon slot="end" size="large" icon={shareSocialOutline}
                       onClick={()=>{
                         const abrirUrl = AbrirURL(a['url']);
                         abrirUrl.compartir();
                       }}></IonIcon>
+
+                      <IonIcon icon={bookmarkOutline} size="large" slot = "end" 
+                      onClick={()=>{                       
+                        const writeFile = guardarNoticia(a['title'], a['description'], a['url']);
+                        writeFile();
+                      }}></IonIcon>
+                      
                     </IonItem>
                   </IonCard>
                 );
