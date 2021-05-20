@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonLabel, IonItem, IonInput, IonDatetime,
   IonSelect, IonSelectOption, IonButton, IonIcon, useIonAlert } from '@ionic/react';
-import { checkmarkDone } from 'ionicons/icons';
-
+import { checkmarkDone, newspaper} from 'ionicons/icons';
 import './Tab1.css';
+import {
+  Plugins
+} from '@capacitor/core';
 
+const { Haptics } = Plugins;
 
 const Tab1: React.FC = () => {
-
-  const [present] = useIonAlert();
   const [text, setText] = useState<string>();
   const [oldestDate, setOldestDate] = useState<string>('');
   const [newestDate, setNewestDate] = useState<string>('');
   const [ordenar, serOrden] = useState<string>('popularity');
   const [idioma, setIdioma] = useState<string>('es');
-
+  const [present] = useIonAlert();
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar slot="secondary">
+        <IonIcon slot="start" size="large" icon={newspaper} />
           <IonTitle>Buscar Noticias</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -60,22 +62,22 @@ const Tab1: React.FC = () => {
             </IonSelect>
           </IonItem>
 
-          <IonButton color="success" expand="full" onClick={ () => {
-
-          present({
-            cssClass: 'my-css',
-            header: 'Revisa los datos',
-            message: 'Clave: ' + text + '. Fecha Inicio: '+oldestDate.substring(0, 10) + '. Fecha Fin: ' + newestDate.substring(0, 10),
-            buttons: [
-              'Cancel',
-              { text: 'Ok', handler: (d) => {window.location.href ="Tab3#" + text+"#" +  oldestDate.substring(0, 10) + "#" +  newestDate.substring(0, 10) + "#"+idioma + "#" + ordenar;} },
-            ],
-            onDidDismiss: (e) => {},
-          });
-
-            
-            //console.log("Q: " + text + " Fecha inicio: " + oldestDate.substring(0, 10) + " Fecha fin: " + newestDate.substring(0, 10) + " Idioma: " + idioma + " Orden: " + ordenar );
-          }}>
+          <IonButton color="success" expand="block" onClick={() => {
+            present({
+              cssClass: 'my-css',
+              header: 'Revisa los datos',
+              message: 'Clave: ' + text + '. Fecha Inicio: '+oldestDate.substring(0, 10) + '. Fecha Fin: ' + newestDate.substring(0, 10),
+              buttons: [
+                'Cancel',
+                { text: 'Ok', handler: (d) => {
+                  Haptics.vibrate();
+                  window.location.href ="Tab3#" + text+"#" +  oldestDate.substring(0, 10) + "#" +  newestDate.substring(0, 10) + "#"+idioma + "#" + ordenar;
+                } },
+              ],
+              onDidDismiss: (e) => {},
+            });
+              //console.log("Q: " + text + " Fecha inicio: " + oldestDate.substring(0, 10) + " Fecha fin: " + newestDate.substring(0, 10) + " Idioma: " + idioma + " Orden: " + ordenar );
+            }}>       
           <IonIcon slot="start" icon={checkmarkDone} />
             Buscar
           </IonButton>

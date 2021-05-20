@@ -4,17 +4,15 @@ import {
   IonList,
   IonTitle,
   IonToolbar,
-  IonButton,
-  IonCard, IonImg, IonPage, IonCardContent, IonCardHeader, IonCardTitle, IonIcon 
+  IonCard, IonImg, IonPage, IonCardContent, IonCardHeader, IonCardTitle, IonIcon , IonItem, IonCardSubtitle
 } from '@ionic/react';
-import { telescope } from 'ionicons/icons';
-import { Toast } from '@capacitor/toast';
+import { reader, share, save } from 'ionicons/icons';
 import axios from 'axios';
 import React from 'react';
+import { AbrirURL, guardarNoticia, alerta } from '../hooks/HookCapacitor';
 
 ////////////
 
-//const API_KEY = "fb422682c3184afd97bba130cee8d153";
   let url = window.location.href;
   let split_url = url.split('#');
   
@@ -31,7 +29,6 @@ import React from 'react';
     const idioma = split_url[4];
     const orden = split_url[5];
     URL = 'https://newsapi.org/v2/top-headlines?q='+clave+'&from='+fInicio+'&to='+fFinal+'&language='+idioma+'&sortBy='+orden+'&apiKey=fb422682c3184afd97bba130cee8d153';
-    console.log(fFinal);
   }
 
 const fetchArticles = () => {
@@ -45,7 +42,6 @@ const fetchArticles = () => {
 
 
 const Tab3: React.FC = () => {
-
   const [articles, setArticles] = React.useState([]);
   const items: any[] = [];
 
@@ -71,10 +67,30 @@ const Tab3: React.FC = () => {
                       <IonCardTitle>{a['title']}</IonCardTitle>
                     </IonCardHeader>
 
-                    <IonCardContent>{a['description']}</IonCardContent>
+                    <IonCardContent>{a['content']}</IonCardContent>
                     
-                    <IonButton href={a['url']} size="small" expand="block" color="secondary">
-                    <IonIcon slot="start" icon={telescope} /> Leer</IonButton>
+                    <IonItem>
+
+                      <IonCardSubtitle>{(a['publishedAt']+"").substring(0, 10)}</IonCardSubtitle>
+
+                      <IonIcon icon={save} size="large" slot = "end" 
+                      onClick={()=>{                       
+                        const writeFile = guardarNoticia(a['title'], a['description'], a['url']);
+                        writeFile();
+                      }}></IonIcon>
+                      
+                      <IonIcon icon={reader} size="large" slot = "end" 
+                      onClick={()=>{
+                        const abrirUrl = AbrirURL(a['url']);
+                        abrirUrl.openCapacitorSite();
+                      }}></IonIcon>
+
+                      <IonIcon slot="end" size="large" icon={share}
+                      onClick={()=>{
+                        const abrirUrl = AbrirURL(a['url']);
+                        abrirUrl.compartir();
+                      }}></IonIcon>
+                    </IonItem>
                   </IonCard>
                 );
             })

@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonSelect, IonSelectOption,
-IonButton, IonIcon, IonList, IonRoute} from '@ionic/react';
+IonButton, IonIcon} from '@ionic/react';
 import './Tab2.css';
-import { checkmarkDone } from 'ionicons/icons';
-import { crearSolicitud } from '../hooks/FormTab2';
+import { checkmarkDone, newspaper } from 'ionicons/icons';
+import {
+  Plugins
+} from '@capacitor/core';
 
-
+const { Haptics } = Plugins;
 
 const Tab2: React.FC = () => {
   const [country, setCountry] = useState<string>('mx');
   const [category, setCategory] = useState<string>('business');
-  const evento = crearSolicitud(country, category);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonIcon slot="start" size="large" icon={newspaper} />
           <IonTitle>Obtener Top Noticias</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <div className="container" id="cont">
-          
           <IonItem>
             <IonLabel>Pais</IonLabel>
             <IonSelect value={country} okText="Aceptar" cancelText="Cancelar" onIonChange={e => setCountry(e.detail.value)}>
@@ -48,7 +48,8 @@ const Tab2: React.FC = () => {
           </IonItem>
 
 
-          <IonButton color="success" expand="full" onClick={ () => {
+          <IonButton color="success" expand="block" onClick={ () => {
+            Haptics.vibrate();
             window.location.href ="Tab3#" + country+"#" + category;
           }}>
           <IonIcon slot="start" icon={checkmarkDone} />
